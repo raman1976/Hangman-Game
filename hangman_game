@@ -1,0 +1,102 @@
+import random
+
+print("Welcome to Hangman")
+print("----------------------------------")
+
+word_Dictionary = ["love", "cookie", "building", "disney", "science", "computers", "refrigerator", "duck", "sky",
+                   "school", "temperature", "mouse", "fries"]
+randword = random.choice(word_Dictionary)
+
+for x in randword:
+    print("_", end=" ")
+
+def print_hangman(wrong):
+    if wrong == 0:
+        print("\n+---+")
+        print("    |")
+        print("    |")
+        print("    |")
+        print("   ===")
+    elif wrong == 1:
+        print("\n+---+")
+        print("O   |")
+        print("    |")
+        print("    |")
+        print("   ===")
+    elif wrong == 2:
+        print("\n+----+")
+        print("O    |")
+        print("|    |")
+        print("     |")
+        print("    ===")
+    elif wrong == 3:
+        print("\n+----+")
+        print(" O    |")
+        print("/|    |")
+        print("      |")
+        print("     ===")
+    elif wrong == 4:
+        print("\n+----+")
+        print(" O     |")
+        print("/|\    |")
+        print("       |")
+        print("      ===")
+    elif wrong == 5:
+        print("\n+----+")
+        print(" O     |")
+        print("/|\    |")
+        print("/      |")
+        print("      ===")
+    elif wrong == 6:
+        print("\n+----+")
+        print(" O     |")
+        print("/|\    |")
+        print("/\     |")
+        print("      ===")
+
+
+def printword(guessedletter):
+    counter = 0
+    rightletters = 0
+    for char in randword:
+        if char in guessedletter:
+            print(randword[counter], end=" ")
+            rightletters += 1
+        else:
+            print(" ", end=" ")
+        counter += 1
+    return rightletters
+
+
+def print_lines():
+    print("\r")
+    for char in randword:
+        print("-", end=" ")
+
+
+length_of_Word_to_guess = len(randword)
+amount_of_times_wrong = 0
+current_letters_guessed = []
+current_letters_right = 0
+
+while amount_of_times_wrong <= 6 and current_letters_right < length_of_Word_to_guess:
+    print("\nLetters guessed so far")
+    for letter in current_letters_guessed:
+        print(letter, end=" ")
+    letterGuessed = input("\nGuess a letter: ")
+
+    if letterGuessed in current_letters_guessed:
+        print("You already guessed that letter!")
+        continue
+
+    if letterGuessed in randword:
+        current_letters_guessed.append(letterGuessed)
+        current_letters_right = printword(current_letters_guessed)
+        print_lines()
+    else:
+        amount_of_times_wrong += 1
+        print_hangman(amount_of_times_wrong)
+        current_letters_guessed.append(letterGuessed)
+        print_lines()
+
+print("Game is over! Thanks for playing")
